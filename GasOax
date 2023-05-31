@@ -1,0 +1,143 @@
+CREATE TABLE proveedor(      
+    id_proveedor INT NOT NULL PRIMARY KEY,
+    nombre VARCHAR(30) not NULL,
+    telefono VARCHAR(10) not NULL
+);
+
+CREATE TABLE producto(      
+    id_producto INT NOT NULL PRIMARY KEY,
+    nombre VARCHAR(45) not NULL,
+    descripcion TEXT,
+    costo DECIMAL(4,2) not NULL,
+    id_proveedor INT not NULL,
+    FOREIGN key (id_proveedor) REFERENCES proveedor (id_proveedor)
+);
+
+
+CREATE TABLE vendedor(      
+    id_vendedor INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    nombre VARCHAR(25) NOT NULL,
+    apellidos VARCHAR(25) NOT NULL,
+    email VARCHAR(55) NOT NULL,
+    id_direccion int not NULL,
+    FOREIGN key (id_direccion) REFERENCES direccion (id_direccion)
+);
+
+CREATE TABLE clientes(      
+    id_clientes INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    nombre VARCHAR(25) NOT NULL,
+    apellidos VARCHAR(25) NOT NULL,
+    email VARCHAR(55) NOT NULL,
+    id_direccion int not NULL,
+    FOREIGN key (id_direccion) REFERENCES direccion (id_direccion)
+);
+
+
+CREATE TABLE direccion(      
+    id_direccion INT AUTO_INCREMENT PRIMARY KEY,
+    colonia VARCHAR(45) NOT NULL,
+    calle VARCHAR(45) NOT NULL,
+    id_municipio int not NULL,
+    FOREIGN key (id_municipio) REFERENCES municipio (id_municipio)
+);
+CREATE TABLE municipio(      
+    id_municipio INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(45) NOT NULL,
+    cp INT(5) not NULL
+);
+
+CREATE TABLE ventas(      
+    id_ventas INT NOT NULL PRIMARY KEY,
+    fecha_venta DATE,
+    total_venta DECIMAL(5,2) NOT NULL,
+    id_producto int not NULL,
+    id_clientes int not NULL,
+    id_vendedor int not NULL,
+    FOREIGN key (id_producto) REFERENCES producto (id_producto),
+    FOREIGN key (id_clientes) REFERENCES clientes (id_clientes),
+    FOREIGN key (id_vendedor) REFERENCES vendedor (id_vendedor)
+);
+
+INSERT INTO proveedor(id_proveedor,nombre,telefono) VALUES 
+(1001,'Gas Oaxaca','951497988'),
+(1002,'Gas Sultana','951400046'),
+(1003,'Gas Oaxaca','951497988'),
+(1004,'Gas Oaxaca','951497988'),
+(1005,'Gas Sultana','951400046'),
+(1006,'Gas Oaxaca','951497988'),
+(1007,'Gas Sultana','951400046'),
+(1008,'Gas Sultana','951400046'),
+(1009,'Gas Oaxaca','951497988'),
+(1010,'Gas Sultana','951400046');
+
+INSERT INTO producto (id_producto, nombre, descripcion, costo, id_proveedor) VALUES 
+(0041, 'LP/kg', 'El gas licuado del petróleo (GLP) es la mezcla de gases condensables presentes en el gas natural o disueltos en el petróleo', 19.56, 1001),
+(0042, 'Propano/kg', 'Se trata de un gas no tóxico, incoloro y prácticamente inodoro, aunque se le suele añadir un olor para que pueda ser detectado en caso de fuga', 24.00, 1002),
+(0043, 'Butano/kg', 'El gas Butano es un hidrocarburo gaseoso compuesto por cuatro átomos de carbono y diez de hidrogeno (C4H10) que se obtiene por destilación de petróleo', 20.00, 1003),
+(0044, 'Gas natural/kg', 'El gas natural es un hidrocarburo gaseoso altamente inflamable, fruto de una mezcla de gases livianos de origen natural, en su mayoría alcanos', 15.69, 1004),
+(0045, 'Propano/kg', 'Se trata de un gas no tóxico, incoloro y prácticamente inodoro, aunque se le suele añadir un olor para que pueda ser detectado en caso de fuga', 24.00, 1005),
+(0046, 'Propano/kg', 'Se trata de un gas no tóxico, incoloro y prácticamente inodoro, aunque se le suele añadir un olor para que pueda ser detectado en caso de fuga', 24.00, 1006),
+(0047, 'Propano/g', 'Se trata de un gas no tóxico, incoloro y prácticamente inodoro, aunque se le suele añadir un olor para que pueda ser detectado en caso de fuga', 24.00, 1007),
+(0048, 'LP/kg', 'El gas licuado del petróleo (GLP) es la mezcla de gases condensables presentes en el gas natural o disueltos en el petróleo', 19.56, 1008),
+(0049, 'LP/kg', 'El gas licuado del petróleo (GLP) es la mezcla de gases condensables presentes en el gas natural o disueltos en el petróleo', 19.56, 1009),
+(0050, 'Gas natural/kg', 'El gas natural es un hidrocarburo gaseoso altamente inflamable, fruto de una mezcla de gases livianos de origen natural, en su mayoría alcanos', 15.69, 1010);
+
+INSERT INTO ventas(id_ventas,fecha_venta,total_venta,id_producto,id_clientes,id_vendedor) VALUES 
+(001,'2023-05-27', 100.50,0041,1,1),
+(002,'2023-05-28', 75.25,0042,2,2),
+(003,'2023-05-29', 50.75,0043,3,3),
+(004,'2023-05-27', 120.00,0044,4,4),
+(005,'2023-05-28', 85.50,0045,5,5),
+(006,'2023-05-29', 60.25,0046,6,6),
+(007,'2023-05-27', 90.75,0047,7,7),
+(008,'2023-05-28', 110.25,0048,8,8),
+(009,'2023-05-29', 70.50,0049,9,9),
+(010,'2023-05-27', 95.75,0050,10,10);
+
+INSERT INTO clientes(nombre,apellidos,email,id_direccion) VALUES 
+('Cleopatra Rosa','Guzman Luis','cleo05@gmail.com',1),
+('Esteban','Jimenez Rios','EsJiRi07@gmail.com',2),
+('Laura','Matias Gutierrez','Mati34@gmail.com',3),
+('Zaida','Fernandez Lopez','ZAI78@gmail.com',4),
+('Susana','Felix Talin','SuFex63@gmail.com',5),
+('Wilber','Lopez Lopez','Lopzz71@gmail.com',6),
+('Hector Adrian','Paulo Vasquez','MrSlimmyArborgast01@gmail.com',7),
+('Ruben de Jesus','Hilario Cruz','@gmail.com',8),
+('Gabriel Orlando','Morales Santiago','@gmail.com',9),
+('David','Morales Mendieta','@gmail.com',10);
+
+INSERT INTO vendedor(nombre,apellidos,email,id_direccion) VALUES 
+('Alan','Solano Ramirez','AlanSol15@gmail.com',1),
+('Jose Luis','Vasquez Palma','CheLuis89@gmail.com',2),
+('Omar','Brena Hernandez','Brenasauriox56@gmail.com',3),
+('Daniel Yosef','Santiago Garcia','PraiseLord05@gmail.com',4),
+('Fernando','Ramirez Cruz','FernandoRam9@gmail.com',5),
+('Luis','Fernando Hernandez','LuisFer2@gmail.com',6),
+('Diego Sosa','Garcia Sanchez','DiegoSOS9@gmail.com',7),
+('Ubaldo','Perez Rios','Ubabu32@gmail.com',8),
+('Luis','Ramirez Lopez','LuisRas05@gmail.com',9),
+('Yanh Mauricio','Luna Flores','YanhMoon01@gmail.com',10);
+
+INSERT INTO direccion(colonia,calle,id_municipio) VALUES 
+('Calzada Madero','Niños Heroes',1),
+('Centro','J.P Garcia',2),
+('Jalatlaco','Hidalgo',3),
+('Jalatlaco','Independencia',4),
+('Reforma','Fiallo',5),
+('Centro','Arteaga',6),
+('San Antonio','Pinos',7),
+('San Antonio','Calicanto',8),
+('Volcanes','Jorullo',9),
+('San Felipe','Jacarandas',10);
+
+INSERT INTO municipio(nombre,cp) VALUES 
+('OAXACA DE JUAREZ',71254),
+('OAXACA DE JUAREZ',68000),
+('OAXACA DE JUAREZ',68018),
+('OAXACA DE JUAREZ',68013),
+('OAXACA DE JUAREZ',68128),
+('OAXACA DE JUAREZ',68120),
+('OAXACA DE JUAREZ',71233),
+('OAXACA DE JUAREZ',68274),
+('OAXACA DE JUAREZ',68156),
+('OAXACA DE JUAREZ',68153);
